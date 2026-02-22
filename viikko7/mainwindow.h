@@ -16,13 +16,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_countButton_clicked();
-
-    void on_resetButton_clicked();
-
 private:
     Ui::MainWindow *ui;
     qtLaskuri laskuri;
+
+    bool secondNumber = false;
+
+    void numberClickedHandler();
+    void operatorClickedHandler();
+    void clearAndEnterClickedHandler();
+    void resetLineEdits();
+
 };
 #endif // MAINWINDOW_H

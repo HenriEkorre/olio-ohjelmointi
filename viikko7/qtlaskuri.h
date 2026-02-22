@@ -8,19 +8,22 @@ class qtLaskuri : public QObject
     Q_OBJECT
 
 private:
-    int arvo;
+    double arvo_a = 0;
+    double arvo_b = 0;
+    int type = -1; // 0 "+", 1 "-", 2 "/", 3 "*"
 
 public:
-    explicit qtLaskuri(int alku = 0, QObject *parent = nullptr);
-
-    int hae() const;
+    explicit qtLaskuri(QObject *parent = nullptr);
 
 public slots:
-    void laske();
+    void setA(double value);
+    void setB(double value);
+    void setType(int t);
+    void calculate();
     void reset();
 
 signals:
-    void arvoMuuttui(int uusiArvo);
+    void resultReady(QString value);
 };
 
 #endif

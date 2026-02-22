@@ -1,23 +1,55 @@
 #include "qtLaskuri.h"
 
-qtLaskuri::qtLaskuri(int alku, QObject *parent)
-    : QObject(parent), arvo(alku)
+qtLaskuri::qtLaskuri(QObject *parent)
+    : QObject(parent)
 {
 }
 
-int qtLaskuri::hae() const
+void qtLaskuri::setA(double value)
 {
-    return arvo;
+    arvo_a = value;
 }
 
-void qtLaskuri::laske()
+void qtLaskuri::setB(double value)
 {
-    arvo++;
-    emit arvoMuuttui(arvo);
+    arvo_b = value;
+}
+
+void qtLaskuri::setType(int t)
+{
+    type = t;
+}
+
+void qtLaskuri::calculate()
+{
+    double result = 0;
+
+    switch(type)
+    {
+        case 0: result = arvo_a + arvo_b; break;
+        case 1: result = arvo_a - arvo_b; break;
+
+        case 2:
+            if(arvo_b == 0){
+                emit resultReady("Error");
+                return;
+            }
+            result = arvo_a / arvo_b;
+            break;
+
+        case 3: result = arvo_a * arvo_b; break;
+
+        default:
+            emit resultReady("?");
+            return;
+    }
+
+    emit resultReady(QString::number(result));
 }
 
 void qtLaskuri::reset()
 {
-    arvo = 0;
-    emit arvoMuuttui(arvo);
+    arvo_a = 0;
+    arvo_b = 0;
+    type = -1;
 }
